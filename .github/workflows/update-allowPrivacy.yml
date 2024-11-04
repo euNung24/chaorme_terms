@@ -22,7 +22,7 @@ jobs:
       - name: Update allowPrivacy.md
         run: |
           latest_content=$(cat ${{ steps.find_latest_md.outputs.latest_md }})
-          echo "$latest_content" > docs/allowPrivacy.md  # README.md의 내용을 업데이트
+          echo "$latest_content" > allowPrivacy.md  # README.md의 내용을 업데이트
 
       - name: Commit changes
         run: |
