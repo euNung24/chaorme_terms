@@ -21,8 +21,8 @@ jobs:
 
       - name: Update serviceTerm.md
         run: |
-          latest_content=$(cat ${{ steps.find_latest_md.outputs.latest_md }})
-          echo "$latest_content" > serviceTerm.md  # README.md의 내용을 업데이트
+          latest_content=$(cat "$latest_md")
+          echo "latest_md=$latest_md" >> $GITHUB_ENV  # set-output 대신 환경 파일 사용
 
       - name: Commit changes
         run: |
