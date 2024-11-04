@@ -29,5 +29,5 @@ jobs:
           git config --local user.name "github-actions"
           git config --local user.email "github-actions@github.com"
           git add serviceTerm.md
-          git commit -m "Update 개인정보처리동의서 with latest content from markdown file" || echo "No changes to commit"
+          git commit -m "Update 서비스 이용 방침 with latest content from markdown file" || echo "No changes to commit"
           git push origin main  # 필요에 따라 브랜치 이름 변경
