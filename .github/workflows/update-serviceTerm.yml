@@ -17,7 +17,7 @@ jobs:
         id: find_latest_md
         run: |
           latest_md=$(ls -t serviceTerm/*.md | head -n 1)  # your-folder를 적절한 경로로 변경
-          echo "::set-output name=latest_md::$latest_md"
+          echo "latest_md=$latest_md"
 
       - name: Update allowPrivacy.md
         run: |
