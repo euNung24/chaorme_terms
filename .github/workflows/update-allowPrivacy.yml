@@ -17,11 +17,11 @@ jobs:
         id: find_latest_md
         run: |
           latest_md=$(ls -t allowPrivacy/*.md | head -n 1)  # your-folder를 적절한 경로로 변경
-          echo "latest_md=$latest_md" >> $GITHUB_OUTPUT
+          echo "latest_md=$latest_md" >> $GITHUB_ENV 
 
       - name: Update allowPrivacy.md
         run: |
-          latest_content=$(cat ${{ steps.find_latest_md.outputs.latest_md }})
+          latest_content=$(cat "$latest_md")
           echo "$latest_content" > allowPrivacy.md  # README.md의 내용을 업데이트
 
       - name: Commit changes
