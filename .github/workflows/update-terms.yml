@@ -1,0 +1,44 @@
+name: 약관 업데이트
+
+on:
+  push:
+    branches:
+      - main  # main 브랜치에 푸시할 때 트리거
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Commit changes
+        run: |
+          git config --local user.name "github-actions"
+          git config --local user.email "github-actions@github.com"
+
+          UPDATED=false
+          UPDATED_FILES=""
+
+          for FOLDER in allowPrivacy privacyTerm serviceTerm; do   # 3개 약관 폴더 모두 순회
+            latest_md=$(ls "$FOLDER"/*.md | sort -V | tail -n 1)
+            target_md="$FOLDER.md"
+
+            echo "📝 Updating $target_md with latest: $latest_md"
+            cat "$latest_md" > "$target_md"
+
+            if ! git diff --quiet "$target_md"; then              # 파일 내용이 실제로 바뀐 경우에만 add
+              git add "$target_md"
+              UPDATED=true
+              UPDATED_FILES="$UPDATED_FILES $target_md"
+            fi
+          done
+
+          if [ "$UPDATED" = true ]; then
+            COMMIT_MSG="Update 약관 파일:$(echo $UPDATED_FILES | tr ' ' ', ' | sed 's/^, //')"   # tr ' ' ', '은 공백을 쉼표로 바꿔줌
+            git commit -m "$COMMIT_MSG"
+            git push origin main
+          else
+            echo "✅ No changes to commit."
+          fi
