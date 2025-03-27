@@ -16,12 +16,12 @@ jobs:
       - name: Find the latest markdown file
         id: find_latest_md
         run: |
-          latest_md=$(ls -t privacyTerm/*.md | head -n 1)  # your-folder를 적절한 경로로 변경
-          echo "latest_md=$latest_md" >> $GITHUB_ENV  # set-output 대신 환경 파일 사용
+          latest_md=$(ls privacyTerm/*.md | sort -V | tail -n 1)  # your-folder를 적절한 경로로 변경
+          echo "LATEST_MD=$latest_md" >> $GITHUB_ENV  # set-output 대신 환경 파일 사용
 
       - name: Update serviceTerm.md
         run: |
-          latest_content=$(cat "$latest_md")
+          latest_content=$(cat "$LATEST_MD")
           echo "$latest_content" > privacyTerm.md  # README.md의 내용을 업데이트
 
       - name: Commit changes
